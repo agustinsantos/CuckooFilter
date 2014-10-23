@@ -236,42 +236,42 @@ namespace CuckooFilter
 
 		private static bool  Haszero4 (ulong x)
 		{
-			return (((x) - 0x1111ULL) & (~(x)) & 0x8888ULL) != 0;
+			return (((x) - 0x1111UL) & (~(x)) & 0x8888UL) != 0;
 		}
 
 		private static bool Hasvalue4 (ulong x, uint n)
 		{
-			return (Haszero4 ((x) ^ (0x1111ULL * (n))));
+			return (Haszero4 ((x) ^ (0x1111UL * (n))));
 		}
 
 		private static bool Haszero8 (ulong x)
 		{
-			return (((x) - 0x01010101ULL) & (~(x)) & 0x80808080ULL) != 0;
+			return (((x) - 0x01010101UL) & (~(x)) & 0x80808080UL) != 0;
 		}
 
 		private static bool Hasvalue8 (ulong x, uint n)
 		{
-			return (Haszero8 ((x) ^ (0x01010101ULL * (n))));
+			return (Haszero8 ((x) ^ (0x01010101UL * (n))));
 		}
 
 		private static bool Haszero12 (ulong x)
 		{
-			return  (((x) - 0x001001001001ULL) & (~(x)) & 0x800800800800ULL) != 0;
+			return  (((x) - 0x001001001001UL) & (~(x)) & 0x800800800800UL) != 0;
 		}
 
 		private static bool Hasvalue12 (ulong x, uint n)
 		{
-			return (Haszero12 ((x) ^ (0x001001001001ULL * (n))));
+			return (Haszero12 ((x) ^ (0x001001001001UL * (n))));
 		}
 
 		private static bool Haszero16 (ulong x)
 		{
-			return (((x) - 0x0001000100010001ULL) & (~(x)) & 0x8000800080008000ULL) != 0;
+			return (((x) - 0x0001000100010001UL) & (~(x)) & 0x8000800080008000UL) != 0;
 		}
 
 		private static bool Hasvalue16 (ulong x, uint n)
 		{
-			return (Haszero16 ((x) ^ (0x0001000100010001ULL * (n))));
+			return (Haszero16 ((x) ^ (0x0001000100010001UL * (n))));
 		}
 
 		private uint z1 = 12345, z2 = 12345, z3 = 12345, z4 = 12345;
