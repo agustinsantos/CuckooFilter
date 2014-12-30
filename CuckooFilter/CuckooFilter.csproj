@@ -50,6 +50,7 @@
     <Compile Include="Table.cs">
       <DependentUpon>CuckooFilter.cs</DependentUpon>
     </Compile>
+    <Compile Include="PermEncoding.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

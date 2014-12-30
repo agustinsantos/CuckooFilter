@@ -7,9 +7,10 @@ namespace CuckooFilter
 	{
 		public static void Main (string[] args)
 		{
-			Stopwatch sw = new Stopwatch();
 
-			sw.Start();
+			Stopwatch sw = new Stopwatch ();
+
+			sw.Start ();
 			uint total_items = 1000000;
 
 			// Create a cuckoo filter where each item is of type uint and
@@ -18,8 +19,8 @@ namespace CuckooFilter
 			// To enable semi-sorting, define the storage of cuckoo filter to be
 			// PackedTable, accepting keys of uint type and making 13 bits
 			// for each key:
-			//   CuckooFilter<uint> filter = CuckooFilter<uint> (total_items, 13, true);
-			CuckooFilter<ulong> filter = new CuckooFilter<ulong> (total_items, 12);
+			CuckooFilter<ulong> filter = new CuckooFilter<ulong> (total_items, 13, true);
+			//CuckooFilter<ulong> filter = new CuckooFilter<ulong> (total_items, 12);
 
 			// Insert items to this cuckoo filter
 			uint num_inserted = 0;
@@ -45,12 +46,13 @@ namespace CuckooFilter
 				}
 				total_queries++;
 			}
-			sw.Stop();
-			Console.WriteLine("Elapsed Time={0}",sw.Elapsed);
+			sw.Stop ();
+			Console.WriteLine ("Elapsed Time={0}", sw.Elapsed);
 
 			// Output the measured false positive rate
 			Console.WriteLine ("False positive rate is {0:F4}%, false queries {1}, total queries {2}", 100.0 * false_queries / total_queries, false_queries, total_queries);
-			Console.WriteLine (filter.Info());
+			Console.WriteLine (filter.Info ());
+
 		}
 	}
 }

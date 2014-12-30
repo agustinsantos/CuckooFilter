@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 
 namespace CuckooFilter
 {
@@ -87,6 +88,26 @@ namespace CuckooFilter
 			char[] chars = new char[bytes.Length / sizeof(char)];
 			System.Buffer.BlockCopy (bytes, 0, chars, 0, bytes.Length);
 			return new string (chars);
+		}
+
+		public static string ByteArrayToHexString(byte[] buf, string sep = " ")
+		{
+			return ByteArrayToHexString(buf, buf.Length, sep);
+		}
+
+		public static string ByteArrayToHexString(byte[] buf, int len, string sep = " ")
+		{
+			StringBuilder Result = new StringBuilder(buf.Length * 2);
+			string HexAlphabet = "0123456789ABCDEF";
+
+			for (int i = 0; i < len; i++) {
+				byte b = buf [i];
+				Result.Append (HexAlphabet [(int)(b >> 4)]);
+				Result.Append (HexAlphabet [(int)(b & 0xF)]);
+				Result.Append (sep);
+			}
+
+			return Result.ToString();
 		}
 	}
 
