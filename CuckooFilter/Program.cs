@@ -51,8 +51,10 @@ namespace CuckooFilter
 
 			// Output the measured false positive rate
 			Console.WriteLine ("False positive rate is {0:F4}%, false queries {1}, total queries {2}", 100.0 * false_queries / total_queries, false_queries, total_queries);
-			Console.WriteLine (filter.Info ());
+			Console.WriteLine (filter.Info());
 
+            Console.WriteLine("Press Enter to finish");
+            Console.ReadLine();
 		}
 	}
 }
