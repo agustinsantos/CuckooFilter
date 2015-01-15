@@ -203,6 +203,11 @@ namespace CuckooFilter
 		private static Random rand = new Random();
 		private int cnt = 0;
 
+		public override bool InsertTagToStash (uint i, uint tag)
+		{
+			throw new NotSupportedException("Stash is not supported in SingleTable");
+		}
+
 		public override bool InsertTagToBucket (uint i, uint tag, bool kickout, out uint oldtag)
 		{
 			oldtag = 0;

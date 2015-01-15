@@ -1,4 +1,4 @@
-//#define DEBUG_ENCODE
+#define NO_DEBUG_ENCODE
 
 using System;
 
@@ -80,10 +80,13 @@ namespace CuckooFilter
 			}
 		}
 
-		/*
+
 		internal static void TestPermEcoding()
 		{
-			byte[] src = new byte[4]{0x03, 0x08, 0x05, 0x0A};
+			//PermEncoding enc = new PermEncoding();
+
+			//byte[] src = new byte[4]{0x03, 0x08, 0x05, 0x0A};
+			byte[] src = new byte[4]{0x0F, 0x0F, 0x0F, 0x0F};
 			ushort rst = PermEncoding.Pack(src);
 			Console.WriteLine ("Rst=0x{0:X04}\t0x{1:X02} 0x{2:X02} 0x{3:X02} 0x{4:X02}", rst, src [0], src [1], src [2], src [3]);
 
@@ -91,9 +94,9 @@ namespace CuckooFilter
 			PermEncoding.Unpack(rst, dst);
 			Console.WriteLine ("Rst=0x{0:X04}\t0x{1:X02} 0x{2:X02} 0x{3:X02} 0x{4:X02}", rst, dst [0], dst [1], dst [2], dst [3]);
 
-			PermEncoding enc = new PermEncoding();
+
 		}
-		*/
+
 	}
 }
 

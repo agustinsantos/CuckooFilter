@@ -6,14 +6,14 @@ namespace CuckooFilter
 {
 	public class PackedTable : Table
 	{
-		private static Random rand = new Random ();
-		private readonly uint dirbits_per_tag;
-		private readonly uint bits_per_bucket;
-		private readonly uint bytes_per_bucket;
+		protected static Random rand = new Random (3);
+		protected readonly uint dirbits_per_tag;
+		protected readonly uint bits_per_bucket;
+		protected readonly uint bytes_per_bucket;
 		// using a pointer adds one more indirection
-		private uint len_;
-		private byte[,] buckets_;
-		private PermEncoding perm_ = new PermEncoding ();
+		protected uint len_;
+		protected byte[,] buckets_;
+		protected PermEncoding perm_ = new PermEncoding ();
 		public readonly uint TAGMASK;
 		public readonly int DIRBITSMASK;
 
@@ -40,6 +40,11 @@ namespace CuckooFilter
 		public override uint SizeInTags ()
 		{
 			return 4 * num_buckets; 
+		}
+
+		public override bool InsertTagToStash (uint i, uint tag)
+		{
+			throw new NotSupportedException("Stash is not supported in SingleTable");
 		}
 
 		public override bool InsertTagToBucket (uint i, uint tag, bool kickout, out uint oldtag)
@@ -167,9 +172,11 @@ namespace CuckooFilter
 		#endregion
 		public void CleanupTags ()
 		{ 
+			/* Not needed in C#. Matrix is already initialized 
 			for (int i = 0; i< buckets_.GetLength(0); i++)
 				for (int j = 0; j< buckets_.GetLength(1); j++)
 					buckets_ [i, j] = 0; 
+		    */
 		}
 
 		public unsafe void PrintBucket (uint i)
@@ -362,7 +369,6 @@ namespace CuckooFilter
 
 			ushort codeword = perm_.Encode (lowbits);
 			DPRINTF ("codeword={0}", StringUtils.ByteArrayToHexString (BitConverter.GetBytes (codeword)));
-
 			/* write out the bucketbits to its place*/
 			fixed (byte* pbuckets = &buckets_[0, 0]) {
 				byte* p = pbuckets + ((bits_per_bucket * i) >> 3);
@@ -440,7 +446,7 @@ namespace CuckooFilter
 
 		}
 
-		private void DPRINTF (string str, params object[] args)
+		protected void DPRINTF (string str, params object[] args)
 		{
 #if DEBUG_DPRINTF
 			Console.WriteLine (str, args);

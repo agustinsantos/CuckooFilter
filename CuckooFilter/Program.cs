@@ -7,11 +7,11 @@ namespace CuckooFilter
 	{
 		public static void Main (string[] args)
 		{
-
+			//PermEncoding.TestPermEcoding();
 			Stopwatch sw = new Stopwatch ();
 
 			sw.Start ();
-			uint total_items = 1000000;
+			uint total_items = 1000000+6632; //6632
 
 			// Create a cuckoo filter where each item is of type uint and
 			// use 12 bits for each item:
@@ -19,7 +19,7 @@ namespace CuckooFilter
 			// To enable semi-sorting, define the storage of cuckoo filter to be
 			// PackedTable, accepting keys of uint type and making 13 bits
 			// for each key:
-			CuckooFilter<ulong> filter = new CuckooFilter<ulong> (total_items, 13, true);
+			CuckooFilter<ulong> filter = new CuckooFilter<ulong> (total_items, 13, TypeOfTable.PackedTableWithStash);
 			//CuckooFilter<ulong> filter = new CuckooFilter<ulong> (total_items, 12);
 
 			// Insert items to this cuckoo filter

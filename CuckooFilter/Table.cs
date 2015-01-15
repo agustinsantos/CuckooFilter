@@ -29,6 +29,8 @@ namespace CuckooFilter
 
 		public abstract uint SizeInTags ();
 
+		public abstract bool InsertTagToStash (uint i, uint tag);
+
 		public abstract bool InsertTagToBucket (uint i, uint tag, bool kickout, out uint oldtag);
 
 		public abstract bool FindTagInBuckets (uint i1, uint i2, uint tag);

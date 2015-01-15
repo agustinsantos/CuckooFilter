@@ -14,6 +14,14 @@ namespace CuckooFilter
 		NotSupported = 3,
 	}
 
+
+	public enum TypeOfTable
+	{
+		SingleTable,
+		PackedTable,
+		PackedTableWithStash
+	}
+
 	/// <summary>
 	/// A cuckoo filter class exposes a Bloomier filter interface,
 	/// providing methods of Add, Delete, Contain. It takes three
@@ -44,8 +52,9 @@ namespace CuckooFilter
 
 		private VictimCache victim_;
 		private IBytesProvider<ItemType> bytesProvider;
+		private readonly bool usingStash;
 
-		public CuckooFilter (uint max_num_keys, uint bits_per_item, bool usePackedTable = false)
+		public CuckooFilter (uint max_num_keys, uint bits_per_item, TypeOfTable usePackedTable = TypeOfTable.SingleTable)
 		{
 			bytesProvider = BytesProvider<ItemType>.Default;
 			this.bits_per_item = bits_per_item;
@@ -57,15 +66,25 @@ namespace CuckooFilter
 				num_buckets <<= 1;
 			}
 			victim_.used = false;
-			if (usePackedTable)
+			switch (usePackedTable)
+			{
+			case TypeOfTable.PackedTable:
 				table_ = new PackedTable (bits_per_item, num_buckets);
-			else
+				usingStash = false;
+				break;
+			case TypeOfTable.SingleTable:
 				table_ = new SingleTable (bits_per_item, num_buckets);
+				usingStash = false;
+				break;
+			case TypeOfTable.PackedTableWithStash:
+				table_ = new PackedTableWithStash (bits_per_item, num_buckets);
+				usingStash = true;
+				break;
+			}
 		}
 		// Add an item to the filter.
 		public Status Add (ItemType item)
-		{
-			uint i;
+		{			uint i;
 			uint tag;
 
 			if (victim_.used) {
@@ -212,6 +231,10 @@ namespace CuckooFilter
 					curtag = oldtag;
 				}
 				curindex = AltIndex (curindex, curtag);
+			}
+			if (usingStash)
+			{
+				table_.InsertTagToStash(curindex, curtag);
 			}
 
 			victim_.index = curindex;
